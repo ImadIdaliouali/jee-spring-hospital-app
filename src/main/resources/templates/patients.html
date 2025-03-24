@@ -14,6 +14,18 @@
         .pagination .btn {
             margin: 0 2px;
         }
+        .search-input-group {
+            display: flex;
+        }
+        .search-input-group .form-control {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-right: none;
+        }
+        .search-input-group .btn {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -22,7 +34,12 @@
 
     <div class="row mb-3">
         <div class="col-md-6 offset-md-6">
-            <input type="text" class="form-control" placeholder="Rechercher...">
+            <form th:action="@{/index}" method="get" class="mb-0">
+                <div class="search-input-group">
+                    <input type="text" name="keyword" class="form-control" th:value="${keyword}" placeholder="Rechercher un patient...">
+                    <button class="btn btn-primary">Rechercher</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -64,7 +81,7 @@
                 <a class="page-link" href="#">&laquo;</a>
             </li>
             <li th:each="page, status : ${pages}" th:class="${currentPage == status.index ? 'page-item active' : 'page-item'}">
-                <a class="page-link" th:href="@{/index(page=${status.index})}" th:text="${status.index + 1}"></a>
+                <a class="page-link" th:href="@{/index(page=${status.index}, keyword=${keyword})}" th:text="${status.index + 1}"></a>
             </li>
             <li class="page-item">
                 <a class="page-link" href="#">&raquo;</a>
